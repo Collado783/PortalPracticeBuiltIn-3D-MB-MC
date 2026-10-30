@@ -25066,3 +25066,29 @@ Received Import Request.
 Start importing Assets/PortalShaderBorni.shader using Guid(82b4101d3eefadb47a51f2d69369a736) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: '4debe1b4d8d6d7a2adbfcf2c92ab23a0') in 0.0017052 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d19d003817b76053e99ec9966f3e130c DependenciesID=904d6b2876fa38f49df6a4d905fca079 StaticDependenciesID=4aa5e09d7bc2b248a68ba49c3ebdc624 
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
 
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 3.35 ms, found 3 plugins.
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 3933 unused Assets / (0.9 MB). Loaded Objects now: 4552.
+Memory consumption went from 107.3 MB to 106.4 MB.
+Total: 9.736700 ms (FindLiveObjects: 0.506900 ms CreateObjectMapping: 0.363900 ms MarkObjects: 7.550200 ms  DeleteObjects: 1.314500 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 2.04 ms, found 3 plugins.
+Unloading 2 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 3933 unused Assets / (1.0 MB). Loaded Objects now: 4552.
+Memory consumption went from 107.6 MB to 106.7 MB.
+Total: 10.533800 ms (FindLiveObjects: 0.584200 ms CreateObjectMapping: 0.361400 ms MarkObjects: 8.186000 ms  DeleteObjects: 1.400600 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 208.275738 seconds.
+  path: Assets/PortalShaderBorni.shader
+  importAddress: Guid(82b4101d3eefadb47a51f2d69369a736) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PortalShaderBorni.shader using Guid(82b4101d3eefadb47a51f2d69369a736) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: 'e51e5a228cd1c19de08581e7819080cf') in 0.0027465 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d19d003817b76053e99ec9966f3e130c DependenciesID=cf74e4049e9b8e5ed1e53988fa465338 StaticDependenciesID=3015b3cda0b34a6bb3b8080c3961c253 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
