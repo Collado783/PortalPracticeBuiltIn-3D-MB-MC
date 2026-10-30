@@ -24923,3 +24923,111 @@ Memory consumption went from 110.6 MB to 109.4 MB.
 Total: 10.517300 ms (FindLiveObjects: 0.507700 ms CreateObjectMapping: 0.828000 ms MarkObjects: 7.560900 ms  DeleteObjects: 1.619100 ms)
 
 Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 1694.120775 seconds.
+  path: Assets/Rendertexture/BlueRT.renderTexture
+  importAddress: Guid(d572481bd073f5947a9fb4366f6d2530) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Rendertexture/BlueRT.renderTexture using Guid(d572481bd073f5947a9fb4366f6d2530) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '4ec44d8bd0cc19bdb4ab71fc72fdcd7c') in 0.1455551 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c2f7e73f851a8f205129da2ca9bb2e8d DependenciesID=8b11e101110ce2b46f2548d1558e8282 StaticDependenciesID=0cac9a047616ed4e887c52129a7e9fa4 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000047 seconds.
+  path: Assets/CODE
+  importAddress: Guid(650aa13872d5f6a4797b9b9427d2c78c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/CODE using Guid(650aa13872d5f6a4797b9b9427d2c78c) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '8eb0bb234c3295526fa9e71bbecb1026') in 0.0070945 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=6526630e174a64f0b0003c1576a4a024 DependenciesID=5cda3f22450359764a4cf88b09f60c15 StaticDependenciesID=83c729c16ad313189691101f70874302 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000061 seconds.
+  path: Assets/Rendertexture/OrangeMirror.mat
+  importAddress: Guid(c5e11ff71713ecc428fedf87fe8062ee) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Rendertexture/OrangeMirror.mat using Guid(c5e11ff71713ecc428fedf87fe8062ee) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '2bc3bfc75ed17f0f2fc3b015a53d45b2') in 0.025704 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=2e4bc69f5e5a18556380ac7f8d14ea05 DependenciesID=eceae3397e4cb6a36d4835246d689f5d StaticDependenciesID=f96dda7abaafb412c54fa05f7c30648c 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 3
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000017 seconds.
+  path: Assets/PortalAssets/textures/BlueFrame.mat
+  importAddress: Guid(1f4e0def5965fd34e8ae15c641429747) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/PortalAssets/textures/BlueFrame.mat using Guid(1f4e0def5965fd34e8ae15c641429747) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'c531c5253bfffae2683cdda090f9afa3') in 0.0305234 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=d139cb5b31f586bb04e87cb8c4bc2a00 DependenciesID=2a1a3abd013f8c39da5551a65a4ce299 StaticDependenciesID=63006d9db80eff12738f0545015940d7 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Rendertexture/BlueMirrorMaterial.mat
+  importAddress: Guid(fa49a8a692ad93d4bbfdc79587f704e8) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Rendertexture/BlueMirrorMaterial.mat using Guid(fa49a8a692ad93d4bbfdc79587f704e8) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'c2519836897fc25f4bef1689bc0cb8c3') in 0.008692 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=c4645d4e0dd517eeb0ba25fc09556461 DependenciesID=54519b75c57897b3e48083003bf99962 StaticDependenciesID=e57c05f6206efb008161cb5a06a00a20 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000024 seconds.
+  path: Assets/Textures/BlueRender.renderTexture
+  importAddress: Guid(23e64c3beac54e0459e8f1fe7470fff8) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/BlueRender.renderTexture using Guid(23e64c3beac54e0459e8f1fe7470fff8) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '80b275f19aea612735f91e0f57bf0f7a') in 0.0082135 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9aafcd3e4fa17dc9c8a9012e06a3d00e DependenciesID=3280fce41fe9ae1972b8213b51b9d72e StaticDependenciesID=5a69f731fadb29a2c313eb8e842eeb91 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000144 seconds.
+  path: Assets/Prefabs
+  importAddress: Guid(afac548e9e5c6b94ea4345a7dadc6a09) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs using Guid(afac548e9e5c6b94ea4345a7dadc6a09) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'b85b810122c6013585861f238c73fc76') in 0.00512 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=1ac082408d610e0f73b80cf5bf0841bd DependenciesID=9984e614c1276f68af04ddf518990500 StaticDependenciesID=cc8182147e412afb2cd4ca1cdb4aa4a5 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000077 seconds.
+  path: Assets/Rendertexture
+  importAddress: Guid(9ff34a0191cdb44428c320c1eb3702fc) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Rendertexture using Guid(9ff34a0191cdb44428c320c1eb3702fc) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '744112bfaacf11cf78e032c471faface') in 0.0050205 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9779a8884238f4c41807cf3aecef73aa DependenciesID=aaf183d9af7e1435052edb0f42d2f4b7 StaticDependenciesID=d9f0097fb6a0a78d21554463a9ac7aba 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000068 seconds.
+  path: Assets/PortalAssets/textures/New Material.mat
+  importAddress: Guid(39d6108be8181ac499bb44d4623989ac) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/PortalAssets/textures/New Material.mat using Guid(39d6108be8181ac499bb44d4623989ac) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '654ca9d64ddac5ac7191b007a7e128ec') in 0.0101883 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9a78398d30ca78c94319414a6071b8ac DependenciesID=c0c65dc6418f545d76e689cbcbd8a7cc StaticDependenciesID=5f8274ac890f430833961a7d0d37fec9 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Rendertexture/OrangeFrameMat.mat
+  importAddress: Guid(c68f2232e98472649b69d2f9c55295a5) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Rendertexture/OrangeFrameMat.mat using Guid(c68f2232e98472649b69d2f9c55295a5) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'b755348e1699269d0315351fa1e970e7') in 0.0095535 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=8db9094d8cd496e03725bafdb599783c DependenciesID=0b18b5497c71ddc528b995691a9a5a29 StaticDependenciesID=f3b146e9cf0e96369dc7554e222bd5bf 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 2
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000021 seconds.
+  path: Assets/Prefabs/OrangePortal Variant.prefab
+  importAddress: Guid(01c56c254931c674392c927be4c28578) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Prefabs/OrangePortal Variant.prefab using Guid(01c56c254931c674392c927be4c28578) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '748a033506275df5e41c1cf0379d1223') in 0.0360016 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=54150d4617803058c7b627c0c633d07b DependenciesID=3b5e98d5736918398cc541d9462287f5 StaticDependenciesID=524b3632ffd2490f4dd6b8da6dbfce30 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 37
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.626617 seconds.
+  path: Assets/Textures/OrangeRt.renderTexture
+  importAddress: Guid(06a22894e388cbd49b5c11db9506a886) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Textures/OrangeRt.renderTexture using Guid(06a22894e388cbd49b5c11db9506a886) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '79484a6770e5bf9066dcab31bd0177a4') in 0.0069901 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=7fe9619c2c4c9edf875972bcc1a5739d DependenciesID=3e3da75d43e4f79ffef0b3b586adf77e StaticDependenciesID=ad0a582ee329f71d9e2f98b072c2d580 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000068 seconds.
+  path: Assets/Scenes/MarcScene 1.unity
+  importAddress: Guid(4d6b3664d5b6a7c46b66837e4e2970a6) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scenes/MarcScene 1.unity using Guid(4d6b3664d5b6a7c46b66837e4e2970a6) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'afa570356d11638b5255009b41cf3e1f') in 0.0084961 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=9d9b843a5e3a11eea3a390cceb0c9bcd DependenciesID=12bf94329a432253d531d9a1506a0ffd StaticDependenciesID=c4031076be13d0e90d41e97e26dff637 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
