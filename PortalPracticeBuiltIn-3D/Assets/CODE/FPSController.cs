@@ -136,8 +136,8 @@ public class FPSController : MonoBehaviour
             m_VerticalSpeed = 0.0f;
 
 
-        if (!reloading && CanShoot() && MustShoot())
-            Shoot();
+        //if (!reloading && CanShoot() && MustShoot())
+            //Shoot();
 
     }
 
@@ -165,36 +165,23 @@ public class FPSController : MonoBehaviour
         else { return true; }
     }
 
-    void Shoot()
+    void Shoot(Portal _portal)
     {
-        if (reloading)
-            return;
-
-        m_CurrentBullets -= 1;
+     
         Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+        if(Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance, m_ShootLayerMask.value))
+        {
+            if(_portal.IsValidPosition(l_RaycastHit.point, l_RaycastHit.normal))
+            {
+                _portal.gameObject.SetActive(true);
+            }
+            else
+            {
+                _portal.gameObject.SetActive(false);
+            }
+        }
 
-        //if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance, m_ShootLayerMask.value))
-        //{
-        //    ShootingTarget l_Target = l_RaycastHit.collider.GetComponentInParent<ShootingTarget>();
-
-        //    if (l_Target != null && l_Target.HitTarget())
-        //    {
-        //        m_Score += l_Target.pointsPerHit;
-        //        score.SumScore(l_Target.pointsPerHit);
-        //        Debug.Log("Score: " + m_Score);
-        //    }
-        //    else if (l_RaycastHit.collider.CompareTag("HitCollider"))
-        //    {
-        //        l_RaycastHit.collider.GetComponent<HitCollider>().Hit();
-        //    }
-        //    else
-        //    {
-        //        CreateShootHitParticles(l_RaycastHit.point, l_RaycastHit.normal);
-        //    }
-
-        //    SetShootWeaponAnim();
-        //    Debug.Log("Current bullets:" + m_CurrentBullets);
-        //}
+       
     }
 
 
