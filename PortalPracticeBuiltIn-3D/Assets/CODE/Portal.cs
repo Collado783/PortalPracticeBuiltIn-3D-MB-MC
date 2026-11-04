@@ -37,9 +37,4 @@ public class Portal : MonoBehaviour
         }
         return true;
     }
-
-    public void SetCheckpoint(Vector3 pos, Quaternion rot)
-    {
-        Debug.Log("Checkpoint setted");
-    }
 }

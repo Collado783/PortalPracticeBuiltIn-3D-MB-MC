@@ -237,6 +237,7 @@ public class FPSController : MonoBehaviour
     // Lo llama CheckpointZone al pasar por una zona de checkpoint
     public void SetCheckpoint(Vector3 position, Quaternion rotation)
     {
+        Debug.Log("Function works");
         m_StartPosition = position;
         m_StartRotation = rotation;
     }
