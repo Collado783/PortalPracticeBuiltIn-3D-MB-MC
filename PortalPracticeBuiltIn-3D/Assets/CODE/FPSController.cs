@@ -60,7 +60,7 @@ public class FPSController : MonoBehaviour
     }
     private void Start()
     {
-        SetIdleWeaponAnim();
+        //SetIdleWeaponAnim();
         m_Yaw = transform.rotation.eulerAngles.y;
         m_Pitch = m_PitchController.eulerAngles.x;
         m_StartPosition = transform.position;
@@ -195,15 +195,15 @@ public class FPSController : MonoBehaviour
         //    bullet.SetActive(true);
         //}
     }
-    void SetIdleWeaponAnim()
-    {
-        m_Animation.CrossFade(m_IdleAnimationClip.name, 0.1f);
-    }
-    void SetShootWeaponAnim()
-    {
-        m_Animation.CrossFade(m_ShootAnimationClip.name, 0.1f);
-        m_Animation.CrossFadeQueued(m_IdleAnimationClip.name, 0.3f);
-    }
+    //void SetIdleWeaponAnim()
+    //{
+    //    m_Animation.CrossFade(m_IdleAnimationClip.name, 0.1f);
+    //}
+    //void SetShootWeaponAnim()
+    //{
+    //    m_Animation.CrossFade(m_ShootAnimationClip.name, 0.1f);
+    //    m_Animation.CrossFadeQueued(m_IdleAnimationClip.name, 0.3f);
+    //}
 
     private void OnTriggerEnter(Collider other)
     {
