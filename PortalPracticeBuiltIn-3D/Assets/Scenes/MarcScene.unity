@@ -232,6 +232,7 @@ MonoBehaviour:
   m_OtherPortalTransform: {fileID: 1820063531}
   m_OtherPortal: {fileID: 1442213254}
   m_CameraOffSet: 0.5
+  m_ValidPositions: []
 --- !u!1 &560356782
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +260,7 @@ Transform:
   m_GameObject: {fileID: 560356782}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 36.28, y: 0, z: 32.46}
+  m_LocalPosition: {x: 30.75, y: 0, z: 22.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -818,6 +819,7 @@ MonoBehaviour:
   m_OtherPortalTransform: {fileID: 1605834453}
   m_OtherPortal: {fileID: 256436633}
   m_CameraOffSet: 0.5
+  m_ValidPositions: []
 --- !u!1 &1549844346
 GameObject:
   m_ObjectHideFlags: 0
