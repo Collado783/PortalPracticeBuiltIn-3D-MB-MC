@@ -2,15 +2,13 @@ using UnityEngine;
 
 public class CompanionSpawner : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Transform m_SpawnPoint;
+    public GameObject m_CompanionCube;
 
-    // Update is called once per frame
-    void Update()
+    public void Execute() 
     {
-        
+        GameObject l_GameObject = GameObject.Instantiate(m_CompanionCube);
+        l_GameObject.transform.position = m_SpawnPoint.position;
     }
 }
+
