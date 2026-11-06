@@ -47,6 +47,9 @@ public class Companioncube : MonoBehaviour
         m_Rigidbody.linearVelocity=_portal.m_OtherPortal.transform.TransformDirection(l_LocalLinealVelocity);
         //m_Yaw = transform.rotation.eulerAngles.y;
         //m_CharacterController.enabled = true;
+
+        float l_Scale = _portal.m_OtherPortal.transform.localScale.x / _portal.transform.localScale.x; ;
+        transform.localScale = Vector3.one * transform.localScale.x*l_Scale;
     }
 }
 
