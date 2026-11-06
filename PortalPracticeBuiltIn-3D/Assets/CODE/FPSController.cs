@@ -25,7 +25,7 @@ public class FPSController : MonoBehaviour
     public Camera m_Camera;
     public float m_MaxShootDistance = 200.0f;
     public LayerMask m_ShootLayerMask;
-
+    public AudioManager audioManagerPlayer;
     [Header("Input")]
     public KeyCode m_LeftKeyCode = KeyCode.A;
     public KeyCode m_RightKeyCode = KeyCode.D;
@@ -40,6 +40,8 @@ public class FPSController : MonoBehaviour
     public Animation m_Animation;
     public AnimationClip m_IdleAnimationClip;
     public AnimationClip m_ShootAnimationClip;
+
+    public Portal portal;
 
     Vector3 m_StartPosition;
     Quaternion m_StartRotation;
@@ -139,8 +141,8 @@ public class FPSController : MonoBehaviour
             m_VerticalSpeed = 0.0f;
 
 
-        if (CanShoot() && MustShoot()) { }
-            //Shoot();
+        if (CanShoot() && MustShoot()) { Shoot(portal); Debug.Log("Shushu"); }
+
 
     }
 
@@ -170,7 +172,6 @@ public class FPSController : MonoBehaviour
 
     void Shoot(Portal _portal)
     {
-     
         Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
         if(Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance, m_ShootLayerMask.value))
         {

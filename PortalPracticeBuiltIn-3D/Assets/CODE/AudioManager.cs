@@ -14,6 +14,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip DoorClip;
     public AudioClip GrabClip;
     public AudioClip ButtonActivationClip;
+    public AudioClip WalkingClip;
 
 
     public void PlaySounds(AudioClip clip, float volume = 1f)
