@@ -53,7 +53,10 @@ public class FPSController : MonoBehaviour
     public int m_DelayReload;
     public int m_InventoryBullets = 90;
     bool m_IsDead = false;
-
+    public GameObject PortalBlue;
+    public GameObject PortalOrange;
+    public int m_portalOffset=1;
+    Vector3 l_Direction;
     private void Awake()
     {
         m_CharacterController = GetComponent<CharacterController>();
@@ -100,7 +103,7 @@ public class FPSController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0.0f, m_Yaw, 0.0f);
         m_PitchController.localRotation = Quaternion.Euler(m_Pitch, 0.0f, 0.0f);
 
-        Vector3 l_Direction = Vector3.zero;
+         l_Direction = Vector3.zero;
         Vector3 l_Right = Vector3.right;
         Vector3 l_Forward = Vector3.forward;
         l_Right.Normalize();
@@ -136,7 +139,7 @@ public class FPSController : MonoBehaviour
             m_VerticalSpeed = 0.0f;
 
 
-        //if (!reloading && CanShoot() && MustShoot())
+        if (CanShoot() && MustShoot()) { }
             //Shoot();
 
     }
@@ -238,5 +241,19 @@ public class FPSController : MonoBehaviour
 
         m_IsDead = false;
     }
-   
+    private void OnTriggerEnter(Collider2D collision)
+    {
+        
+    }
+    //void Teleport(Portal _Portal)
+    //{
+    //    Vector3 l_WorldPosition = transform.position + l_Direction + m_portalOffset;
+    //    Vector3 l_WorldForward = transform.forward;
+    //    Vector3 l_LocalPosition = _Portal.m_MirrorPortal.transform.TransformPoint(l_WorldPosition);
+    //    Vector3 l_LocalForward=_Portal.m_OtherPortal.transform.InverseTransformDirection(l_WorldForward);
+
+    //    m_CharacterController.enabled = false; 
+    //    transform.position= _Portal.m_MirrorPortal.transform
+    //}
+
 }
