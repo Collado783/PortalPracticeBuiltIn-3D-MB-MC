@@ -20,7 +20,7 @@ public class DoorButton : MonoBehaviour
     {
         if (!Pushed)
         {
-            Debug.Log("nO");
+           
             transform.position = Vector3.MoveTowards(transform.position, StartPoint, Speed * Time.deltaTime);
         }
     }

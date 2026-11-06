@@ -36,6 +36,7 @@ public class FPSController : MonoBehaviour
     public KeyCode m_LockAngle = KeyCode.I;
     public KeyCode m_DebugLockCursorKeyCode = KeyCode.O;
     public KeyCode m_ReloadKey = KeyCode.R;
+    public KeyCode m_Grab = KeyCode.E;
 
     public Animation m_Animation;
     public AnimationClip m_IdleAnimationClip;
@@ -53,10 +54,22 @@ public class FPSController : MonoBehaviour
     public int m_DelayReload;
     public int m_InventoryBullets = 90;
     bool m_IsDead = false;
-    public GameObject PortalBlue;
-    public GameObject PortalOrange;
-    public int m_portalOffset=1;
-    Vector3 l_Direction;
+    public Portal PortalBlue;
+    public Portal PortalOrange;
+    public float m_portalOffset=2f;
+    Vector3 m_Direction;
+    public float m_MaxValidAngle = 40f;
+
+
+    bool m_ObjectAttached;
+        bool m_AttachingObject;
+    Rigidbody m_GrabObject;
+    public Transform grabTransform;
+    public float grabTime;
+    float Timetograb = 0.8f;
+    public float m_ShootAttachedObjectForce;
+
+    
     private void Awake()
     {
         m_CharacterController = GetComponent<CharacterController>();
@@ -103,21 +116,21 @@ public class FPSController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0.0f, m_Yaw, 0.0f);
         m_PitchController.localRotation = Quaternion.Euler(m_Pitch, 0.0f, 0.0f);
 
-         l_Direction = Vector3.zero;
+         m_Direction = Vector3.zero;
         Vector3 l_Right = Vector3.right;
         Vector3 l_Forward = Vector3.forward;
         l_Right.Normalize();
         l_Forward.Normalize();
 
         if (Input.GetKey(m_RightKeyCode))
-            l_Direction += transform.right;
+            m_Direction += transform.right;
         else if (Input.GetKey(m_LeftKeyCode))
-            l_Direction -= transform.right;
+            m_Direction -= transform.right;
 
         if (Input.GetKey(m_UpKeyCode))
-            l_Direction += transform.forward;
+            m_Direction += transform.forward;
         else if (Input.GetKey(m_DownKeyCode))
-            l_Direction -= transform.forward;
+            m_Direction -= transform.forward;
 
         float l_Speed = m_Speed;
         if (Input.GetKey(m_SprintKeyCode) && m_CharacterController.isGrounded)
@@ -125,12 +138,16 @@ public class FPSController : MonoBehaviour
         if (Input.GetKey(m_JumpKeyCode) && m_CharacterController.isGrounded)
             m_VerticalSpeed = m_JumpSpeed;
 
-        m_VerticalSpeed = m_VerticalSpeed + Physics.gravity.y * Time.deltaTime;
+        if (CanGrabObject())
+        {
+            GrabObject();
+        }
+            
 
         m_VerticalSpeed = m_VerticalSpeed + Physics.gravity.y * Time.deltaTime;
 
-        l_Direction.Normalize();
-        l_Direction = l_Direction * l_Speed * Time.deltaTime;
+        m_Direction.Normalize();
+        Vector3 l_Direction = m_Direction * l_Speed * Time.deltaTime;
         l_Direction.y = m_VerticalSpeed * Time.deltaTime;
         CollisionFlags l_CollisionFlags = m_CharacterController.Move(l_Direction);
         if ((l_CollisionFlags & CollisionFlags.CollidedBelow) != 0)
@@ -140,8 +157,70 @@ public class FPSController : MonoBehaviour
 
 
         if (CanShoot() && MustShoot()) { }
-            //Shoot();
+            Shoot(PortalBlue);
+        UpdateAttachedObject();
+        UpdateAttachingObject();
 
+    }
+    bool CanGrabObject()
+    {
+        if (Input.GetKeyDown(m_Grab) && !m_AttachingObject && !m_ObjectAttached) return true;
+
+        else return false;
+    }
+    void GrabObject()
+    {
+        Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
+        if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance, m_ShootLayerMask.value))
+        {
+            if (l_RaycastHit.collider.CompareTag("Cube"))
+            {
+                GrabObject(l_RaycastHit.collider);
+            }
+        }
+    }
+    void UpdateAttachingObject()
+    {
+        if (m_AttachingObject)
+        {
+            float l_DiffTime = Time.time - grabTime;
+            float l_Pct = Mathf.Min(1.0f, l_DiffTime / grabTime);
+            m_GrabObject.transform.position = Vector3.Lerp(m_GrabObject.transform.position, grabTransform.position, l_Pct);
+            m_GrabObject.transform.rotation = Quaternion.Lerp(m_GrabObject.transform.rotation, grabTransform.rotation, l_Pct);
+
+            if (l_Pct==1.0f)
+            {
+                m_AttachingObject = false;
+                m_ObjectAttached = true; 
+            }
+        }
+    }
+    void UpdateAttachedObject()
+    {
+        if (m_ObjectAttached)
+        {
+            if (Input.GetKeyUp(m_Grab))
+            {
+                ThrowAttachedObject(0.0f);
+            }
+            else if (Input.GetMouseButtonDown(m_ShootButton)) ThrowAttachedObject(m_ShootAttachedObjectForce);
+            
+        }
+    }
+    void GrabObject(Collider _Collider)
+    {
+        m_GrabObject = _Collider.GetComponent<Rigidbody>();
+        m_GrabObject.isKinematic = true;
+        m_AttachingObject = true;
+        m_GrabObject.transform.SetParent(grabTransform);
+        grabTime = Time.time;
+    }
+    void ThrowAttachedObject(float Force)
+    {
+        m_GrabObject.isKinematic = false;
+        m_GrabObject.linearVelocity = transform.forward * Force;
+        m_GrabObject.transform.SetParent(null);
+        m_ObjectAttached = false; 
     }
 
     bool CanShoot()
@@ -167,6 +246,7 @@ public class FPSController : MonoBehaviour
 
         else { return true; }
     }
+
 
     void Shoot(Portal _portal)
     {
@@ -210,7 +290,15 @@ public class FPSController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        Debug.Log("Col registered");
         if (other.CompareTag("DeadZone")) { StartCoroutine(Kill()); }
+        if (other.CompareTag("Portal"))
+        {
+            Debug.Log("Col Portal registered");
+            Portal l_Portal = other.GetComponent<Portal>();
+            //if (CanTeleport(l_Portal))
+                Teleport(l_Portal);
+        }
     }
     IEnumerator Kill()
     {
@@ -241,19 +329,25 @@ public class FPSController : MonoBehaviour
 
         m_IsDead = false;
     }
-    private void OnTriggerEnter(Collider2D collision)
+    
+    private bool CanTeleport(Portal _Portal)
     {
-        
+        float l_MaxDotAngle = Mathf.Cos(m_MaxValidAngle * Mathf.Deg2Rad);
+        float l_DotAngle = Vector3.Dot(m_Direction, _Portal.transform.forward);
+        return l_DotAngle >= l_MaxDotAngle;
     }
-    //void Teleport(Portal _Portal)
-    //{
-    //    Vector3 l_WorldPosition = transform.position + l_Direction + m_portalOffset;
-    //    Vector3 l_WorldForward = transform.forward;
-    //    Vector3 l_LocalPosition = _Portal.m_MirrorPortal.transform.TransformPoint(l_WorldPosition);
-    //    Vector3 l_LocalForward=_Portal.m_OtherPortal.transform.InverseTransformDirection(l_WorldForward);
+    void Teleport(Portal _portal)
+    {
+        Vector3 l_WorldPosition = transform.position + m_Direction * m_portalOffset;
+        Vector3 l_WorldForward = transform.forward;
+        Vector3 l_LocalPosition = _portal.m_OtherPortalTransform.InverseTransformPoint(l_WorldPosition);
+        Vector3 l_localForward = _portal.m_OtherPortalTransform.InverseTransformDirection(l_WorldForward);
 
-    //    m_CharacterController.enabled = false; 
-    //    transform.position= _Portal.m_MirrorPortal.transform
-    //}
+        m_CharacterController.enabled = false;
+        transform.position = _portal.m_OtherPortal.transform.TransformPoint(l_LocalPosition);
+        transform.forward = _portal.m_OtherPortal.transform.TransformDirection(l_localForward);
+        m_Yaw = transform.rotation.eulerAngles.y;
+        m_CharacterController.enabled = true;
+    }
 
 }

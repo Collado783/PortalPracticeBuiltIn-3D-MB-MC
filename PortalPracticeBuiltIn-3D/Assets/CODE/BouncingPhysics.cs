@@ -2,15 +2,26 @@ using UnityEngine;
 
 public class BouncingPhysics : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private BoxCollider boxCollider; 
+    private void Awake()
     {
-        
+       boxCollider = this.GetComponent<BoxCollider>();
     }
+    
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        //if (boxCollider != null)
+        //{
+        //    boxCollider.material = new PhysicMaterial()
+        //    {
+        //        bounciness = 1,
+        //    };
+        //}
     }
 }
