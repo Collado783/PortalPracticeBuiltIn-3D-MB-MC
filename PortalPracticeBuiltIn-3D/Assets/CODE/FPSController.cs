@@ -155,18 +155,18 @@ public class FPSController : MonoBehaviour
         else if ((l_CollisionFlags & CollisionFlags.CollidedBelow) != 0 && m_VerticalSpeed > 0.0f)
             m_VerticalSpeed = 0.0f;
 
+        UpdateAttachedObject();
+        UpdateAttachingObject();
 
         if (CanShoot() && MustShoot()) { }
             Shoot(PortalBlue);
-        UpdateAttachedObject();
-        UpdateAttachingObject();
+       
 
     }
     bool CanGrabObject()
     {
         if (Input.GetKeyDown(m_Grab) && !m_AttachingObject && !m_ObjectAttached) return true;
-
-        else return false;
+        return false;
     }
     void GrabObject()
     {
