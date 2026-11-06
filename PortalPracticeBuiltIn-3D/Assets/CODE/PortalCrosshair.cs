@@ -20,8 +20,8 @@ public class PortalCrosshair : MonoBehaviour
     void Update()
     {
         if (Blue && Orange) CanvasImage = Both;
-        if(Blue &&!Orange) CanvasImage = OnlyBlue 
+        if (Blue && !Orange) CanvasImage = OnlyBlue;
         if (!Blue && Orange)
-        if(!Blue && !Orange)
+            if (!Blue && !Orange) ;
     }
 }
