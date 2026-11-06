@@ -5,6 +5,7 @@ public class CheckpointZone : MonoBehaviour
 {
     public Transform m_RespawnPoint;
     public bool m_OnlyOnce = true;
+    public AudioManager audioManager;
 
     bool m_Activated = false;
 
@@ -24,6 +25,7 @@ public class CheckpointZone : MonoBehaviour
 
         Transform l_Point = m_RespawnPoint != null ? m_RespawnPoint : transform;
         Debug.Log("Trigereao");
+        audioManager.PlaySounds(audioManager.CheckpointClip);
         l_Player.SetCheckpoint(l_Point.position, l_Point.rotation);
         m_Activated = true;
     }

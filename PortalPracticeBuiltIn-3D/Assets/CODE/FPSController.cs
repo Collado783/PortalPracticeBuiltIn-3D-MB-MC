@@ -44,6 +44,8 @@ public class FPSController : MonoBehaviour
     Vector3 m_StartPosition;
     Quaternion m_StartRotation;
 
+    public AudioManager audioManager;
+
     int m_ShootButton = 0;
 
     public int m_Score = 0;
@@ -135,7 +137,7 @@ public class FPSController : MonoBehaviour
         else if ((l_CollisionFlags & CollisionFlags.CollidedBelow) != 0 && m_VerticalSpeed > 0.0f)
             m_VerticalSpeed = 0.0f;
 
-
+        // aQUI FALLA ALGO
         if (!reloading && CanShoot() && MustShoot())
             Shoot();
 
@@ -143,8 +145,8 @@ public class FPSController : MonoBehaviour
 
     bool CanShoot()
     {
-        if (m_CurrentBullets <= 0) { return false; }
-        return true;
+        if (m_CurrentBullets <= 0) { return true; }
+        return false;
     }
 
     bool MustShoot()
@@ -167,9 +169,10 @@ public class FPSController : MonoBehaviour
 
     void Shoot()
     {
-        if (reloading)
-            return;
-
+        //if (reloading)
+        //    return;
+        Debug.Log("Audio shoot");
+        audioManager.PlaySounds(audioManager.ShootClip);
         m_CurrentBullets -= 1;
         Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
 
