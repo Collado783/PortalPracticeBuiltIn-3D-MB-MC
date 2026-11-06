@@ -171,13 +171,23 @@ public class FPSController : MonoBehaviour
     void GrabObject()
     {
         Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
-        if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance, m_ShootLayerMask.value))
+
+        if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance))
         {
+
             if (l_RaycastHit.collider.CompareTag("Cube"))
             {
-                GrabObject(l_RaycastHit.collider);
+                GrabObjectt(l_RaycastHit.collider);
             }
         }
+    }
+    void GrabObjectt(Collider _Collider)
+    {
+        m_GrabObject = _Collider.GetComponent<Rigidbody>();
+        m_GrabObject.isKinematic = true;
+        m_AttachingObject = true;
+        m_GrabObject.transform.SetParent(grabTransform);
+        grabTime = Time.time;
     }
     void UpdateAttachingObject()
     {
@@ -207,14 +217,7 @@ public class FPSController : MonoBehaviour
             
         }
     }
-    void GrabObject(Collider _Collider)
-    {
-        m_GrabObject = _Collider.GetComponent<Rigidbody>();
-        m_GrabObject.isKinematic = true;
-        m_AttachingObject = true;
-        m_GrabObject.transform.SetParent(grabTransform);
-        grabTime = Time.time;
-    }
+    
     void ThrowAttachedObject(float Force)
     {
         m_GrabObject.isKinematic = false;
@@ -225,6 +228,8 @@ public class FPSController : MonoBehaviour
 
     bool CanShoot()
     {
+        if (!m_AttachingObject || m_ObjectAttached) { return false; }
+        
         if (m_CurrentBullets <= 0) { return false; }
         return true;
     }
