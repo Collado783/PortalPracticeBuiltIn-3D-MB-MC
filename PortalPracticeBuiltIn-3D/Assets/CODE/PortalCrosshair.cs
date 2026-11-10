@@ -1,27 +1,35 @@
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PortalCrosshair : MonoBehaviour
 {
     public Portal Blue;
     public Portal Orange;
-    public Image OnlyOrange;
-    public Image OnlyBlue;
-    public Image Both;
-    public Image None;
+
+    public Sprite OnlyOrange;
+    public Sprite OnlyBlue;
+    public Sprite Both;
+    public Sprite None;
+
     public Image CanvasImage;
 
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
     void Update()
     {
-        if (Blue && Orange) CanvasImage = Both;
-        if (Blue && !Orange) CanvasImage = OnlyBlue;
-        if (!Blue && Orange)
-            if (!Blue && !Orange) ;
+        if (Blue.gameObject.activeSelf && Orange.gameObject.activeSelf)
+        {
+            CanvasImage.sprite = Both;
+        }
+        else if (Blue.gameObject.activeSelf)
+        {
+            CanvasImage.sprite = OnlyBlue;
+        }
+        else if (Orange.gameObject.activeSelf)
+        {
+            CanvasImage.sprite = OnlyOrange;
+        }
+        else
+        {
+            CanvasImage.sprite = None;
+        }
     }
 }

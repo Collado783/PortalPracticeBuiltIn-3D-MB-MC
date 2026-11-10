@@ -6,11 +6,14 @@ TagManager:
   tags:
   - PortalEnabled
   - Portal
+  - Cube
+  - BounceMaterial
+  - DeadZone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Wall
   - Water
   - UI
   - 

@@ -46,6 +46,7 @@ public class FPSController : MonoBehaviour
     Quaternion m_StartRotation;
 
     int m_ShootButton = 0;
+    int m_SecondShootButton = 1;
 
     public int m_Score = 0;
     public int m_MaxBullets = 30;
@@ -68,7 +69,7 @@ public class FPSController : MonoBehaviour
     public float grabTime;
     float Timetograb = 0.8f;
     public float m_ShootAttachedObjectForce;
-
+    bool m_CanTeleport=true;
     
     private void Awake()
     {
@@ -158,9 +159,19 @@ public class FPSController : MonoBehaviour
         UpdateAttachedObject();
         UpdateAttachingObject();
 
-        if (CanShoot() && MustShoot()) { }
-            Shoot(PortalBlue);
-       
+        if (CanShoot())
+        {
+            if (Input.GetMouseButtonDown(m_ShootButton))
+            {
+                Shoot(PortalBlue);
+            }
+
+            if (Input.GetMouseButtonDown(m_SecondShootButton))
+            {
+                Shoot(PortalOrange);
+            }
+        }
+
 
     }
     bool CanGrabObject()
@@ -194,43 +205,54 @@ public class FPSController : MonoBehaviour
         if (m_AttachingObject)
         {
             float l_DiffTime = Time.time - grabTime;
-            float l_Pct = Mathf.Min(1.0f, l_DiffTime / grabTime);
-            m_GrabObject.transform.position = Vector3.Lerp(m_GrabObject.transform.position, grabTransform.position, l_Pct);
-            m_GrabObject.transform.rotation = Quaternion.Lerp(m_GrabObject.transform.rotation, grabTransform.rotation, l_Pct);
+            float l_Pct = Mathf.Clamp01(l_DiffTime / Timetograb);
 
-            if (l_Pct==1.0f)
+            m_GrabObject.transform.position = Vector3.Lerp(m_GrabObject.transform.position,grabTransform.position,l_Pct);
+
+            m_GrabObject.transform.rotation = Quaternion.Lerp(m_GrabObject.transform.rotation,grabTransform.rotation,l_Pct);
+
+            if (l_Pct >= 1.0f)
             {
                 m_AttachingObject = false;
-                m_ObjectAttached = true; 
+                m_ObjectAttached = true;
             }
         }
     }
     void UpdateAttachedObject()
     {
-        if (m_ObjectAttached)
+        if (m_AttachingObject && Input.GetKeyUp(m_Grab))
+        {
+            ThrowAttachedObject(0.0f);
+        }
+        else if (m_ObjectAttached)
         {
             if (Input.GetKeyUp(m_Grab))
             {
                 ThrowAttachedObject(0.0f);
             }
-            else if (Input.GetMouseButtonDown(m_ShootButton)) ThrowAttachedObject(m_ShootAttachedObjectForce);
-            
+            else if (Input.GetMouseButtonDown(m_ShootButton))
+            {
+                ThrowAttachedObject(m_ShootAttachedObjectForce);
+            }
         }
     }
-    
+
     void ThrowAttachedObject(float Force)
     {
         m_GrabObject.isKinematic = false;
         m_GrabObject.linearVelocity = transform.forward * Force;
         m_GrabObject.transform.SetParent(null);
-        m_ObjectAttached = false; 
+
+        m_ObjectAttached = false;
+        m_AttachingObject = false;
     }
 
     bool CanShoot()
     {
-        if (!m_AttachingObject || m_ObjectAttached) { return false; }
-        
-        if (m_CurrentBullets <= 0) { return false; }
+        if (m_AttachingObject || m_ObjectAttached)
+            return false;
+
+
         return true;
     }
 
@@ -255,11 +277,11 @@ public class FPSController : MonoBehaviour
 
     void Shoot(Portal _portal)
     {
-     
         Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
-        if(Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance, m_ShootLayerMask.value))
+
+        if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance, m_ShootLayerMask.value))
         {
-            if(_portal.IsValidPosition(l_RaycastHit.point, l_RaycastHit.normal))
+            if (_portal.IsValidPosition(l_RaycastHit.point, l_RaycastHit.normal))
             {
                 _portal.gameObject.SetActive(true);
             }
@@ -268,8 +290,10 @@ public class FPSController : MonoBehaviour
                 _portal.gameObject.SetActive(false);
             }
         }
-
-       
+        else
+        {
+            _portal.gameObject.SetActive(false);
+        }
     }
 
 
@@ -296,14 +320,32 @@ public class FPSController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Col registered");
-        if (other.CompareTag("DeadZone")) { StartCoroutine(Kill()); }
-        if (other.CompareTag("Portal"))
+
+        if (other.CompareTag("DeadZone"))
+        {
+            StartCoroutine(Kill());
+        }
+
+        if (other.CompareTag("Portal") && m_CanTeleport)
         {
             Debug.Log("Col Portal registered");
+
             Portal l_Portal = other.GetComponent<Portal>();
-            //if (CanTeleport(l_Portal))
+
+            if (l_Portal != null && CanTeleport(l_Portal))
+            {
+                m_CanTeleport = false;
+
                 Teleport(l_Portal);
+
+                StartCoroutine(TeleportCooldown());
+            }
         }
+    }
+    IEnumerator TeleportCooldown()
+    {
+        yield return new WaitForSeconds(0.2f);
+        m_CanTeleport = true;
     }
     IEnumerator Kill()
     {
@@ -334,24 +376,35 @@ public class FPSController : MonoBehaviour
 
         m_IsDead = false;
     }
-    
+
     private bool CanTeleport(Portal _Portal)
     {
+        if (!_Portal.m_OtherPortal.gameObject.activeSelf)
+            return false;
+
         float l_MaxDotAngle = Mathf.Cos(m_MaxValidAngle * Mathf.Deg2Rad);
-        float l_DotAngle = Vector3.Dot(m_Direction, _Portal.transform.forward);
+
+        Vector3 l_Direction = m_Direction.normalized;
+
+        if (l_Direction == Vector3.zero)
+            return false;
+
+        float l_DotAngle = Vector3.Dot(l_Direction, -_Portal.transform.forward);
+
         return l_DotAngle >= l_MaxDotAngle;
     }
     void Teleport(Portal _portal)
     {
-        Vector3 l_WorldPosition = transform.position + m_Direction * m_portalOffset;
-        Vector3 l_WorldForward = transform.forward;
-        Vector3 l_LocalPosition = _portal.m_OtherPortalTransform.InverseTransformPoint(l_WorldPosition);
-        Vector3 l_localForward = _portal.m_OtherPortalTransform.InverseTransformDirection(l_WorldForward);
+        Vector3 l_LocalPosition = _portal.transform.InverseTransformPoint(transform.position);
 
         m_CharacterController.enabled = false;
-        transform.position = _portal.m_OtherPortal.transform.TransformPoint(l_LocalPosition);
-        transform.forward = _portal.m_OtherPortal.transform.TransformDirection(l_localForward);
+
+        transform.position = _portal.m_OtherPortalTransform.TransformPoint(new Vector3(-l_LocalPosition.x, l_LocalPosition.y, -l_LocalPosition.z));
+
+
+        transform.forward = -_portal.m_OtherPortalTransform.forward;
         m_Yaw = transform.rotation.eulerAngles.y;
+
         m_CharacterController.enabled = true;
     }
 
