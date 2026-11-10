@@ -9,6 +9,9 @@ TagManager:
   - Cube
   - BounceMaterial
   - DeadZone
+  - IceMaterial
+  - Turret
+  - DestroyMaterial
   layers:
   - Default
   - TransparentFX

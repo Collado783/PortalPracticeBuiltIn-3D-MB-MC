@@ -136676,3 +136676,39 @@ Memory consumption went from 138.0 MB to 137.0 MB.
 Total: 4.617400 ms (FindLiveObjects: 0.256800 ms CreateObjectMapping: 0.134700 ms MarkObjects: 3.378500 ms  DeleteObjects: 0.846500 ms)
 
 Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 298.429372 seconds.
+  path: Assets/CODE/FPSController.cs
+  importAddress: Guid(fc2ca6680ddef68439136b006c2d58b1) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/CODE/FPSController.cs using Guid(fc2ca6680ddef68439136b006c2d58b1) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: 'c07a50ed2996dee648e84db245edd499') in 0.0618861 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=a5777f7fece0093ae8b65fb3834425c1 DependenciesID=ba1fa448adc0f5c001910cc3ef469363 StaticDependenciesID=dd4e4b7f7262a285756e1e91fa24a20d 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/Scenes/MarcScene.unity
+  importAddress: Guid(c01a5e09538f9a748979a08b1307ca45) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/Scenes/MarcScene.unity using Guid(c01a5e09538f9a748979a08b1307ca45) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '6da9df1f3dd718a6c50bec8ca945e0cc') in 0.0185442 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=37dce6cb199a3fd6da6928fb487d98ef DependenciesID=34d95ae2d6366823dcab29b53fced815 StaticDependenciesID=221d80f4d48d184676b7189a47a7583e 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 1
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000018 seconds.
+  path: Assets/CODE/PortalCrosshair.cs
+  importAddress: Guid(ade79310239888e4883efe13ee2ea453) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d)
+Start importing Assets/CODE/PortalCrosshair.cs using Guid(ade79310239888e4883efe13ee2ea453) Importer(2089858483,b0f066a214c2f5e87bad3c948f4d605d) (ScriptedImporter) -> (Import Result ID: '9bbf8b30ad59e6ebd956651f6a73633a') in 0.0159724 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=5537ef5e06da8197fa51ad6a320a21d0 DependenciesID=b4c98612214c98c180c90b12f1a83fa8 StaticDependenciesID=008661fe41ad9f215b5cb4d23bf103a2 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 0
+
+========================================================================
+Received Prepare
+Unloading 0 Unused Serialized files (Serialized files now loaded: 0)
+Unloading 3945 unused Assets / (1.0 MB). Loaded Objects now: 4664.
+Memory consumption went from 136.2 MB to 135.3 MB.
+Total: 4.478600 ms (FindLiveObjects: 0.254500 ms CreateObjectMapping: 0.137100 ms MarkObjects: 3.477600 ms  DeleteObjects: 0.608800 ms)
+
+Prepare: number of updated asset objects reloaded= 0
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0
