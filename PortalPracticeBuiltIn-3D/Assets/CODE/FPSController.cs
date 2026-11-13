@@ -156,10 +156,11 @@ public class FPSController : MonoBehaviour
         else if ((l_CollisionFlags & CollisionFlags.CollidedBelow) != 0 && m_VerticalSpeed > 0.0f)
             m_VerticalSpeed = 0.0f;
 
+        bool l_CanShoot = CanShoot();
         UpdateAttachedObject();
         UpdateAttachingObject();
 
-        if (CanShoot())
+        if (l_CanShoot)
         {
             if (Input.GetMouseButtonDown(m_ShootButton))
             {
@@ -240,7 +241,7 @@ public class FPSController : MonoBehaviour
     void ThrowAttachedObject(float Force)
     {
         m_GrabObject.isKinematic = false;
-        m_GrabObject.linearVelocity = transform.forward * Force;
+        m_GrabObject.linearVelocity = m_Camera.transform.forward * Force;
         m_GrabObject.transform.SetParent(null);
 
         m_ObjectAttached = false;
