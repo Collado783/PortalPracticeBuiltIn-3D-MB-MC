@@ -12,6 +12,7 @@ TagManager:
   - IceMaterial
   - Turret
   - DestroyMaterial
+  - RefractionCube
   layers:
   - Default
   - TransparentFX
