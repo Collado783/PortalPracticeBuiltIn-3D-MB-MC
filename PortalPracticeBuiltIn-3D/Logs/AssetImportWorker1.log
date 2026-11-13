@@ -942,3 +942,23 @@ Memory consumption went from 99.4 MB to 98.3 MB.
 Total: 4.052100 ms (FindLiveObjects: 0.266400 ms CreateObjectMapping: 0.145600 ms MarkObjects: 2.903300 ms  DeleteObjects: 0.735700 ms)
 
 Prepare: number of updated asset objects reloaded= 0
+========================================================================
+Received Import Request.
+  Time since last request: 1873.162762 seconds.
+  path: Assets/Prefabs/BluePortal.prefab
+  importAddress: Guid(9f267d4709d41144fb5e300075e1ff37) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/BluePortal.prefab using Guid(9f267d4709d41144fb5e300075e1ff37) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: 'cb5d5527a2bf6a863babbcb504ec5690') in 0.0957363 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=87f1c44c5c63dc941510baf449f96baf DependenciesID=88ffc9b1e6ab8d6fcee17840430b8343 StaticDependenciesID=e799b861b628e23006918ee2a9dc67b6 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 62
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.000028 seconds.
+  path: Assets/Prefabs/OrangePortal Variant.prefab
+  importAddress: Guid(01c56c254931c674392c927be4c28578) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Prefabs/OrangePortal Variant.prefab using Guid(01c56c254931c674392c927be4c28578) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: '6cc41da431fa0c694b1418b45a8d71ef') in 0.021703 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=65b7acef4e4b9901fda9b0666b154286 DependenciesID=bef4fee6860a2079b2fe8a1cddbde716 StaticDependenciesID=9d06f12ba20ef12ff3f8092a6a3e07c8 
+Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 120
+
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

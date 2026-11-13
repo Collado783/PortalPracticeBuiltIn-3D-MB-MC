@@ -9,6 +9,13 @@ public class RefractionCube : MonoBehaviour
     public float m_MaxDistance;
     public LayerMask m_LayerMask;
 
+    GameController m_gameController;
+
+    public void Start()
+    {
+        m_gameController = FindObjectOfType<GameController>();
+
+    }
     void Update()
     {
         if (disableLaserOnNextFrame)
@@ -35,7 +42,10 @@ public class RefractionCube : MonoBehaviour
             l_Position = Vector3.forward * l_RaycastHit.distance;
 
             RefractionCube l_RefractionCube = l_RaycastHit.collider.GetComponent<RefractionCube>();
-
+            if (l_RaycastHit.collider.CompareTag("Player"))
+            {
+                m_gameController.GameOverUI();
+            }
             if (l_RefractionCube != null)
             {
                 l_RefractionCube.Refract();

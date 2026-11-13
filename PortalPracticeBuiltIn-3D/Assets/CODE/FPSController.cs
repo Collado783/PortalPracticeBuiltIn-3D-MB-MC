@@ -90,8 +90,8 @@ public class FPSController : MonoBehaviour
 
     private void Update()
     {
-        //if (GameController.GetGameController().GameOverScreen)
-            //return;
+        if (GameController.GetGameController().GameOverScreen)
+            return;
 
         if (Input.GetKeyDown(m_LockAngle))
             angleLocked = !angleLocked;
