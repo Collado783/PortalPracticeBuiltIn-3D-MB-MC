@@ -1,90 +1,55 @@
-using NUnit.Framework;
 using UnityEngine;
-using System.Collections.Generic;
 
 public class Portal : MonoBehaviour
 {
-    FPSController m_Player;
-    public Camera m_Camera;
-    public Transform m_OtherPortalTransform;
     public Portal m_OtherPortal;
-    public float m_CameraOffSet = 0.5f;
-    public List<Transform> m_ValidPositions;
-    public float m_RayCastValidationOffSetDistance = 0.1f;
-    public float m_MaxAngleValidation = 5f;
-    public float m_MaxDistanceToValidPoint = 0.5f;
-    private void Awake()
-    {
-        m_Player = FindObjectOfType<FPSController>();
-    }
+    public Transform m_OtherPortalTransform;
 
-    void Update()
+    public Transform[] m_PortalCorners;
+
+    public bool IsValidPosition(Vector3 position, Vector3 normal, LayerMask mask)
     {
-        if (!m_OtherPortal.gameObject.activeSelf)
+        if (normal == Vector3.zero)
+            return false;
+
+        normal.Normalize();
+
+        Vector3 originalPosition = transform.position;
+        Quaternion originalRotation = transform.rotation;
+
+        transform.position = position;
+        transform.rotation = Quaternion.LookRotation(normal);
+        Physics.SyncTransforms(); //Update de fisicas para el raycast, que sino no lo hace bien idk why
+
+        bool allPointsValid = m_PortalCorners != null && m_PortalCorners.Length > 0;
+
+        if (allPointsValid)
         {
-            m_Camera.enabled = false;
-            return;
-        }
+            Vector3 n = transform.forward;
 
-        m_Camera.enabled = true;
-
-        Camera l_Camera = Camera.main;
-        Vector3 l_CameraWorldPosition = l_Camera.transform.position;
-        Vector3 l_DirectionWorldPosition = l_Camera.transform.forward;
-        Vector3 l_CameraLocalPosition = m_OtherPortal.transform.InverseTransformPoint(l_CameraWorldPosition);
-        Vector3 l_DirectionLocalPosition = m_OtherPortal.transform.InverseTransformDirection(l_DirectionWorldPosition);
-
-        m_Camera.transform.position = m_OtherPortalTransform.transform.TransformPoint(l_CameraLocalPosition);
-
-        float l_Distance = Vector3.Distance(m_Camera.transform.position, transform.position);
-        m_Camera.nearClipPlane = m_CameraOffSet + l_Distance;
-    }
-    public bool IsValidPosition(Vector3 Position, Vector3 Normal)
-    {
-        transform.position = Position;
-        transform.rotation = Quaternion.LookRotation(Normal);
-
-        float l_MaxValidationDotAngle = Mathf.Cos(m_MaxAngleValidation * Mathf.Deg2Rad);
-
-        for (int i = 0; i < m_ValidPositions.Count; i++)
-        {
-            Vector3 l_CameraPosition = m_Player.m_Camera.transform.position;
-
-            Vector3 l_Direction = m_ValidPositions[i].position - l_CameraPosition;
-            float l_Distance = l_Direction.magnitude + m_RayCastValidationOffSetDistance;
-
-            l_Direction.Normalize();
-
-            Ray l_Ray = new Ray(l_CameraPosition, l_Direction);
-
-            if (Physics.Raycast(l_Ray, out RaycastHit l_HitInfo, 200f, ~0, QueryTriggerInteraction.Ignore))
+            foreach (Transform corner in m_PortalCorners)
             {
-
-                if (!l_HitInfo.collider.CompareTag("PortalEnabled"))
+                if (corner == null)
                 {
-                    return false;
+                    allPointsValid = false;
+                    break;
                 }
 
-                float l_DistanceToHitPoint = Vector3.Distance(l_HitInfo.point, m_ValidPositions[i].position);
+                Vector3 onPlane = corner.position - n * Vector3.Dot(corner.position - position, n);
+                Vector3 origin = onPlane + n * 0.1f;
 
-                if (l_DistanceToHitPoint >= m_MaxDistanceToValidPoint)
+                if (!Physics.Raycast(origin, -n, 0.3f, mask, QueryTriggerInteraction.Ignore))
                 {
-                    return false;
+                    allPointsValid = false;
+                    break;
                 }
-
-                float l_DotAngle = Vector3.Dot(Normal, l_HitInfo.normal);
-
-                if (l_DotAngle < l_MaxValidationDotAngle)
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return false;
             }
         }
 
-        return true;
+        transform.position = originalPosition;
+        transform.rotation = originalRotation;
+        Physics.SyncTransforms();
+
+        return allPointsValid;
     }
 }
