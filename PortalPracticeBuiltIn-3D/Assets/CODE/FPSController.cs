@@ -21,6 +21,7 @@ public class FPSController : MonoBehaviour
     public float m_SprintSpeed = 0;
     bool angleLocked = false;
     bool cursorLocked = false;
+
     [Header("Shoot")]
     public Camera m_Camera;
     public float m_MaxShootDistance = 200.0f;
@@ -55,43 +56,55 @@ public class FPSController : MonoBehaviour
     public int m_DelayReload;
     public int m_InventoryBullets = 90;
     bool m_IsDead = false;
+
     public Portal PortalBlue;
     public Portal PortalOrange;
-    public float m_portalOffset=2f;
+    public float m_portalOffset = 2f;
     Vector3 m_Direction;
     public float m_MaxValidAngle = 40f;
 
-
     bool m_ObjectAttached;
-        bool m_AttachingObject;
+    bool m_AttachingObject;
     Rigidbody m_GrabObject;
     public Transform grabTransform;
     public float grabTime;
     float Timetograb = 0.8f;
     public float m_ShootAttachedObjectForce;
-    bool m_CanTeleport=true;
-    
+    bool m_CanTeleport = true;
+
+    [Header("Previews")]
+    public GameObject m_ValidBluePreview;
+    public GameObject m_ValidOrangePreview;
+    public GameObject m_InvalidPortalPreview;
+
+    GameObject m_CurrentPreview;
+    GameObject m_CurrentPreviewPrefab;
+    Portal m_CurrentPortal;
+    bool m_IsPreviewing = false;
+
+    Vector3 m_PreviewPosition;
+    Vector3 m_PreviewNormal;
+    bool m_IsValidPosition;
+
     private void Awake()
     {
         m_CharacterController = GetComponent<CharacterController>();
     }
+
     private void Start()
     {
-        //SetIdleWeaponAnim();
         m_Yaw = transform.rotation.eulerAngles.y;
         m_Pitch = m_PitchController.eulerAngles.x;
         m_StartPosition = transform.position;
         m_StartRotation = transform.rotation;
         m_CurrentBullets = m_MaxBullets;
         m_IsDead = false;
-
-        //m_HitParticlesPool = new CPoolElements(10, m_HitParticlePrefab); lo dejo asi pk ya hice mi pool de objetos
     }
 
     private void Update()
     {
-        //if (GameController.GetGameController().GameOverScreen)
-            //return;
+        if (GameController.GetGameController().GameOverScreen)
+            return;
 
         if (Input.GetKeyDown(m_LockAngle))
             angleLocked = !angleLocked;
@@ -99,7 +112,6 @@ public class FPSController : MonoBehaviour
         {
             Cursor.lockState = Cursor.lockState != CursorLockMode.Locked ? CursorLockMode.Locked : CursorLockMode.None;
         }
-
 
         float l_MouseX = Input.GetAxis("Mouse X");
         float l_MouseY = Input.GetAxis("Mouse Y");
@@ -117,12 +129,7 @@ public class FPSController : MonoBehaviour
         transform.rotation = Quaternion.Euler(0.0f, m_Yaw, 0.0f);
         m_PitchController.localRotation = Quaternion.Euler(m_Pitch, 0.0f, 0.0f);
 
-         m_Direction = Vector3.zero;
-        Vector3 l_Right = Vector3.right;
-        Vector3 l_Forward = Vector3.forward;
-        l_Right.Normalize();
-        l_Forward.Normalize();
-
+        m_Direction = Vector3.zero;
         if (Input.GetKey(m_RightKeyCode))
             m_Direction += transform.right;
         else if (Input.GetKey(m_LeftKeyCode))
@@ -143,7 +150,6 @@ public class FPSController : MonoBehaviour
         {
             GrabObject();
         }
-            
 
         m_VerticalSpeed = m_VerticalSpeed + Physics.gravity.y * Time.deltaTime;
 
@@ -153,8 +159,6 @@ public class FPSController : MonoBehaviour
         CollisionFlags l_CollisionFlags = m_CharacterController.Move(l_Direction);
         if ((l_CollisionFlags & CollisionFlags.CollidedBelow) != 0)
             m_VerticalSpeed = 0.0f;
-        else if ((l_CollisionFlags & CollisionFlags.CollidedBelow) != 0 && m_VerticalSpeed > 0.0f)
-            m_VerticalSpeed = 0.0f;
 
         bool l_CanShoot = CanShoot();
         UpdateAttachedObject();
@@ -162,37 +166,30 @@ public class FPSController : MonoBehaviour
 
         if (l_CanShoot)
         {
-            if (Input.GetMouseButtonDown(m_ShootButton))
-            {
-                Shoot(PortalBlue);
-            }
-
-            if (Input.GetMouseButtonDown(m_SecondShootButton))
-            {
-                Shoot(PortalOrange);
-            }
+            UpdatePortalPreview(m_ShootButton, PortalBlue);
+            UpdatePortalPreview(m_SecondShootButton, PortalOrange);
         }
-
-
     }
+
     bool CanGrabObject()
     {
         if (Input.GetKeyDown(m_Grab) && !m_AttachingObject && !m_ObjectAttached) return true;
         return false;
     }
+
     void GrabObject()
     {
         Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
 
         if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance))
         {
-
             if (l_RaycastHit.collider.CompareTag("Cube"))
             {
                 GrabObjectt(l_RaycastHit.collider);
             }
         }
     }
+
     void GrabObjectt(Collider _Collider)
     {
         m_GrabObject = _Collider.GetComponent<Rigidbody>();
@@ -201,6 +198,7 @@ public class FPSController : MonoBehaviour
         m_GrabObject.transform.SetParent(grabTransform);
         grabTime = Time.time;
     }
+
     void UpdateAttachingObject()
     {
         if (m_AttachingObject)
@@ -208,9 +206,8 @@ public class FPSController : MonoBehaviour
             float l_DiffTime = Time.time - grabTime;
             float l_Pct = Mathf.Clamp01(l_DiffTime / Timetograb);
 
-            m_GrabObject.transform.position = Vector3.Lerp(m_GrabObject.transform.position,grabTransform.position,l_Pct);
-
-            m_GrabObject.transform.rotation = Quaternion.Lerp(m_GrabObject.transform.rotation,grabTransform.rotation,l_Pct);
+            m_GrabObject.transform.position = Vector3.Lerp(m_GrabObject.transform.position, grabTransform.position, l_Pct);
+            m_GrabObject.transform.rotation = Quaternion.Lerp(m_GrabObject.transform.rotation, grabTransform.rotation, l_Pct);
 
             if (l_Pct >= 1.0f)
             {
@@ -219,6 +216,7 @@ public class FPSController : MonoBehaviour
             }
         }
     }
+
     void UpdateAttachedObject()
     {
         if (m_AttachingObject && Input.GetKeyUp(m_Grab))
@@ -253,75 +251,102 @@ public class FPSController : MonoBehaviour
         if (m_AttachingObject || m_ObjectAttached)
             return false;
 
-
         return true;
     }
 
-    bool MustShoot()
+    void UpdatePortalPreview(int Button, Portal _Portal)
     {
-        return Input.GetMouseButtonDown(m_ShootButton);
-    }
-
-   
-
-    bool MustReload()
-    {
-        return Input.GetKeyDown(m_ReloadKey);
-    }
-    bool CanReload()
-    {
-        if (m_InventoryBullets <= 0) { Debug.Log("Insufficient ammo" + m_InventoryBullets); return false; }
-
-        else { return true; }
-    }
-
-
-    void Shoot(Portal _portal)
-    {
-        Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
-
-        if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance, m_ShootLayerMask.value))
+        if (Input.GetMouseButtonDown(Button))
         {
-            if (_portal.IsValidPosition(l_RaycastHit.point, l_RaycastHit.normal))
-            {
-                _portal.gameObject.SetActive(true);
-            }
+            m_IsPreviewing = true;
+            m_CurrentPortal = _Portal;
+        }
+
+        if (!m_IsPreviewing || m_CurrentPortal != _Portal)
+            return;
+
+        if (Input.GetMouseButton(Button))
+        {
+            UpdatePreview();
+        }
+
+        if (Input.GetMouseButtonUp(Button))
+        {
+            FinishPortalPreview();
+        }
+    }
+
+    void UpdatePreview()
+    {
+        Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        if (Physics.Raycast(l_Ray, out RaycastHit l_HitInfo, m_MaxShootDistance, m_ShootLayerMask.value))
+        {
+            m_PreviewPosition = l_HitInfo.point;
+            m_PreviewNormal = l_HitInfo.normal;
+
+            m_IsValidPosition = m_CurrentPortal.IsValidPosition(m_PreviewPosition, m_PreviewNormal, m_ShootLayerMask);
+
+            GameObject prefabToUse;
+
+            if (!m_IsValidPosition)
+                prefabToUse = m_InvalidPortalPreview;
+            else if (m_CurrentPortal == PortalBlue)
+                prefabToUse = m_ValidBluePreview;
             else
+                prefabToUse = m_ValidOrangePreview;
+
+            if (prefabToUse != null)
             {
-                _portal.gameObject.SetActive(false);
+                if (m_CurrentPreview == null || m_CurrentPreviewPrefab != prefabToUse)
+                {
+                    if (m_CurrentPreview != null)
+                        Destroy(m_CurrentPreview);
+
+                    m_CurrentPreview = Instantiate(prefabToUse);
+                    m_CurrentPreviewPrefab = prefabToUse;
+                }
+
+                m_CurrentPreview.transform.position = m_PreviewPosition + (m_PreviewNormal * 0.01f);
+                m_CurrentPreview.transform.rotation = Quaternion.LookRotation(m_PreviewNormal);
             }
         }
         else
         {
-            _portal.gameObject.SetActive(false);
+            m_IsValidPosition = false;
+            if (m_CurrentPreview != null)
+            {
+                Destroy(m_CurrentPreview);
+                m_CurrentPreview = null;
+            }
         }
     }
 
-
-    void CreateShootHitParticles(Vector3 position, Vector3 normal)
+    void FinishPortalPreview()
     {
-        //GameObject bullet = ObjectPooling.SharedInstance.GetPooledObject();
-        //if (bullet != null)
-        //{
-        //    bullet.transform.position = position;
-        //    bullet.transform.rotation = Quaternion.LookRotation(normal);
-        //    bullet.SetActive(true);
-        //}
+        if (m_CurrentPreview != null)
+        {
+            Destroy(m_CurrentPreview);
+            m_CurrentPreview = null;
+        }
+
+        if (m_IsValidPosition)
+        {
+            m_CurrentPortal.gameObject.SetActive(true);
+            m_CurrentPortal.transform.position = m_PreviewPosition;
+            m_CurrentPortal.transform.rotation = Quaternion.LookRotation(m_PreviewNormal);
+        }
+        else
+        {
+            m_CurrentPortal.gameObject.SetActive(false);
+        }
+
+        m_IsPreviewing = false;
+        m_CurrentPortal = null;
     }
-    //void SetIdleWeaponAnim()
-    //{
-    //    m_Animation.CrossFade(m_IdleAnimationClip.name, 0.1f);
-    //}
-    //void SetShootWeaponAnim()
-    //{
-    //    m_Animation.CrossFade(m_ShootAnimationClip.name, 0.1f);
-    //    m_Animation.CrossFadeQueued(m_IdleAnimationClip.name, 0.3f);
-    //}
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Col registered");
-
         if (other.CompareTag("DeadZone"))
         {
             StartCoroutine(Kill());
@@ -329,38 +354,32 @@ public class FPSController : MonoBehaviour
 
         if (other.CompareTag("Portal") && m_CanTeleport)
         {
-            Debug.Log("Col Portal registered");
-
             Portal l_Portal = other.GetComponent<Portal>();
 
             if (l_Portal != null && CanTeleport(l_Portal))
             {
                 m_CanTeleport = false;
-
                 Teleport(l_Portal);
-
                 StartCoroutine(TeleportCooldown());
             }
         }
     }
+
     IEnumerator TeleportCooldown()
     {
         yield return new WaitForSeconds(0.2f);
         m_CanTeleport = true;
     }
+
     IEnumerator Kill()
     {
         if (m_IsDead)
             yield break;
 
         m_IsDead = true;
-
-        //GameController.GetGameController().GameOverUI();
-
         yield return null;
     }
 
-    // Lo llama CheckpointZone al pasar por una zona de checkpoint
     public void SetCheckpoint(Vector3 position, Quaternion rotation)
     {
         m_StartPosition = position;
@@ -369,7 +388,6 @@ public class FPSController : MonoBehaviour
 
     public void Restart()
     {
-        //GetComponent<PlayerHealth>().RestartHealth();
         m_CharacterController.enabled = false;
         transform.position = m_StartPosition;
         transform.rotation = m_StartRotation;
@@ -384,7 +402,6 @@ public class FPSController : MonoBehaviour
             return false;
 
         float l_MaxDotAngle = Mathf.Cos(m_MaxValidAngle * Mathf.Deg2Rad);
-
         Vector3 l_Direction = m_Direction.normalized;
 
         if (l_Direction == Vector3.zero)
@@ -394,19 +411,15 @@ public class FPSController : MonoBehaviour
 
         return l_DotAngle >= l_MaxDotAngle;
     }
+
     void Teleport(Portal _portal)
     {
         Vector3 l_LocalPosition = _portal.transform.InverseTransformPoint(transform.position);
 
         m_CharacterController.enabled = false;
-
         transform.position = _portal.m_OtherPortalTransform.TransformPoint(new Vector3(-l_LocalPosition.x, l_LocalPosition.y, -l_LocalPosition.z));
-
-
         transform.forward = -_portal.m_OtherPortalTransform.forward;
         m_Yaw = transform.rotation.eulerAngles.y;
-
         m_CharacterController.enabled = true;
     }
-
 }

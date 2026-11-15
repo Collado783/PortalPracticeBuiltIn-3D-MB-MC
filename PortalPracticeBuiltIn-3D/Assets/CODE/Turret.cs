@@ -6,7 +6,14 @@ public class Turret : MonoBehaviour
     public float m_MaxDistance;
     public LayerMask m_LayerMask;
     public float m_AngleToFall = 30.0f;
+    GameController m_gameController;
 
+
+    public void Start()
+    {
+        m_gameController = FindObjectOfType<GameController>();
+
+    }
     void Update()
     {bool l_Fallen = Vector3.Dot(transform.up, Vector3.up)<Mathf.Cos(m_AngleToFall*Mathf.Deg2Rad);
         m_Laser.gameObject.SetActive(!l_Fallen);
@@ -21,6 +28,11 @@ public class Turret : MonoBehaviour
                 if (l_RaycastHit.collider.CompareTag("RefractionCube"))
                 {
                     l_RaycastHit.collider.GetComponent<RefractionCube>().Refract();
+                }
+                if (l_RaycastHit.collider.CompareTag("Player"))
+                {
+                    m_gameController.GameOverUI();
+
                 }
             }
 
