@@ -1570,3 +1570,7 @@ Received Import Request.
 Start importing Assets/PortalAssets/Standard Assets/Prototyping/Models/JoinOuterPrototype02x06x02.fbx using Guid(6386a10e23c45d040a22051e6ae3b70f) Importer(815301076,1909f56bfc062723c751e8b465ee728b) (PreviewImporter) -> (Import Result ID: 'b15ab7acd6e25acd7da6fe6d0dc4fa82') in 0.019978 seconds [static and dynamic dependencies]. Details - ImportResultOutputID=50f946c34c8d6f85c0fd7062e3952f28 DependenciesID=4de51230093c8ec5943dff2c820e4de5 StaticDependenciesID=b2e9764b79bd8c4a29aa90fa007ee240 
 Number of updated asset objects reloaded before import = 0Number of asset objects unloaded after import = 8
 
+Editor requested this worker to shutdown with reason: Scaling down because of idle timeout
+AssetImportWorker is now disconnected from the server
+Process exiting
+Exiting without the bug reporter. Application will terminate with return code 0

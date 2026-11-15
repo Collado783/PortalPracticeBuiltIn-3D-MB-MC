@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-    Vector3 StartPoint;
-    Vector3 EndPoint;
+    public Vector3 StartPoint;
+    public Vector3 EndPoint;
 
     public Transform endPoint;
     public float Speed = 2f;
