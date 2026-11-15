@@ -502,7 +502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33725ea8afbf104418856a68ec99029f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Companioncube
-  m_MaxValidAngle: 40
+  m_MaxValidAngle: 180
 --- !u!1 &172604503
 GameObject:
   m_ObjectHideFlags: 0
