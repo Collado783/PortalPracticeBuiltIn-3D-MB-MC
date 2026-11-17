@@ -1,2 +1,23 @@
 fileFormatVersion: 2
 guid: 990d18f79a1dec944a80072d45edc0fc
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - SoundSource: {instanceID: 0}
+  - CheckpointClip: {instanceID: 0}
+  - ShootClip: {instanceID: 0}
+  - TeleportClip: {fileID: 8300000, guid: 83d989d10e689b940803bfbb1121e77b, type: 3}
+  - TurretShotClip: {instanceID: 0}
+  - CollisionClip: {instanceID: 0}
+  - JumpClip: {instanceID: 0}
+  - WalkClip: {instanceID: 0}
+  - DoorClip: {instanceID: 0}
+  - GrabClip: {instanceID: 0}
+  - ButtonActivationClip: {fileID: 8300000, guid: c34bff519ba93a44f85519bfb2631730, type: 3}
+  - WalkingClip: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
