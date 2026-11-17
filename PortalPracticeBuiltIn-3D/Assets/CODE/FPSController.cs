@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class FPSController : MonoBehaviour
@@ -12,6 +13,7 @@ public class FPSController : MonoBehaviour
     Vector3 m_OrangeBaseScale;
     public float m_ScaleScrollSpeed = 2f; 
     float m_PortalScale = 1f;
+    
 
     float m_Yaw;
     float m_Pitch;
@@ -49,6 +51,8 @@ public class FPSController : MonoBehaviour
     public Animation m_Animation;
     public AnimationClip m_IdleAnimationClip;
     public AnimationClip m_ShootAnimationClip;
+
+    public AudioManager m_AudioManager;
 
     Vector3 m_StartPosition;
     Quaternion m_StartRotation;
@@ -152,9 +156,12 @@ public class FPSController : MonoBehaviour
 
         float l_Speed = m_Speed;
         if (Input.GetKey(m_SprintKeyCode) && m_CharacterController.isGrounded)
-            l_Speed = m_SprintSpeed;
+            l_Speed = m_SprintSpeed;        
         if (Input.GetKey(m_JumpKeyCode) && m_CharacterController.isGrounded)
+        {
             m_VerticalSpeed = m_JumpSpeed;
+            m_AudioManager.PlaySounds(m_AudioManager.JumpClip);
+        }
 
         if (CanGrabObject())
         {
@@ -178,6 +185,7 @@ public class FPSController : MonoBehaviour
         {
             UpdatePortalPreview(m_ShootButton, PortalBlue);
             UpdatePortalPreview(m_SecondShootButton, PortalOrange);
+            
         }
     }
 
@@ -189,6 +197,7 @@ public class FPSController : MonoBehaviour
 
     void GrabObject()
     {
+        m_AudioManager.PlaySounds(m_AudioManager.GrabClip);   
         Ray l_Ray = m_Camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0.0f));
 
         if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance))
@@ -202,6 +211,7 @@ public class FPSController : MonoBehaviour
 
     void GrabObjectt(Collider _Collider)
     {
+        m_AudioManager.PlaySounds(m_AudioManager.GrabClip);
         m_GrabObject = _Collider.GetComponent<Rigidbody>();
         m_GrabObject.isKinematic = true;
         m_AttachingObject = true;
@@ -284,6 +294,7 @@ public class FPSController : MonoBehaviour
         if (Input.GetMouseButtonUp(Button))
         {
             FinishPortalPreview();
+            m_AudioManager.PlaySounds(m_AudioManager.ShootClip);
         }
     }
 
@@ -445,6 +456,8 @@ public class FPSController : MonoBehaviour
 
     void Teleport(Portal _portal)
     {
+        m_AudioManager.PlaySounds(m_AudioManager.TeleportClip);
+
         Transform l_In = _portal.transform;
         Transform l_Out = _portal.m_OtherPortalTransform;
 
