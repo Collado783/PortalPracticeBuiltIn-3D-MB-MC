@@ -156,7 +156,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100022, guid: 3ff19207daa57f14c97bfbc2aa7f3e63, type: 3}
       propertyPath: m_TagString
-      value: RefractionCube
+      value: LaserDoorButton
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 3ff19207daa57f14c97bfbc2aa7f3e63, type: 3}
       propertyPath: m_LocalPosition.x
@@ -188,15 +188,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400022, guid: 3ff19207daa57f14c97bfbc2aa7f3e63, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -201.4438
+      value: -198.74472
       objectReference: {fileID: 0}
     - target: {fileID: 400022, guid: 3ff19207daa57f14c97bfbc2aa7f3e63, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.6744
+      value: 4.4790244
       objectReference: {fileID: 0}
     - target: {fileID: 400022, guid: 3ff19207daa57f14c97bfbc2aa7f3e63, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -327.43
+      value: -332.9342
       objectReference: {fileID: 0}
     - target: {fileID: 400022, guid: 3ff19207daa57f14c97bfbc2aa7f3e63, type: 3}
       propertyPath: m_LocalRotation.w
@@ -249,7 +249,7 @@ PrefabInstance:
       addedObject: {fileID: 6543626538953727887}
     - targetCorrespondingSourceObject: {fileID: 100022, guid: 3ff19207daa57f14c97bfbc2aa7f3e63, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 5192074821648904178}
+      addedObject: {fileID: 6347657773702577070}
   m_SourcePrefab: {fileID: 100100000, guid: 3ff19207daa57f14c97bfbc2aa7f3e63, type: 3}
 --- !u!4 &2007868474130572927 stripped
 Transform:
@@ -309,7 +309,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &5192074821648904178
+--- !u!114 &6347657773702577070
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -318,11 +318,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2007868474130807391}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bc103d30cc559e4884bc0ac6b054cf3, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d50302c709a06647a72353d9e1013d9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::RefractionCube
-  m_Laser: {fileID: 8398144171855233041}
-  m_MaxDistance: 50
-  m_LayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  m_EditorClassIdentifier: Assembly-CSharp::LaserDoorButton
+  m_Door: {fileID: 0}

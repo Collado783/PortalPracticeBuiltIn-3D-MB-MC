@@ -50,6 +50,10 @@ public class RefractionCube : MonoBehaviour
             {
                 l_RefractionCube.Refract();
             }
+            if (l_RaycastHit.collider.CompareTag("LaserDoorButton"))
+            {
+                l_RaycastHit.collider.GetComponent<LaserDoorButton>().ReceiveLaser();
+            }
         }
 
         m_Laser.gameObject.SetActive(true);

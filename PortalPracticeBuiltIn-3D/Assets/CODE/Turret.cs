@@ -41,6 +41,12 @@ public class Turret : MonoBehaviour
                      
                 }
 
+
+                if (l_RaycastHit.collider.CompareTag("LaserDoorButton"))
+                {
+                    l_RaycastHit.collider.GetComponent<LaserDoorButton>().ReceiveLaser();
+                }
+
             }
 
             m_Laser.SetPosition(1, l_Postion);
