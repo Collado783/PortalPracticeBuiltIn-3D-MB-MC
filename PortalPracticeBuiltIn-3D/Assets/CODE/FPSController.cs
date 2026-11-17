@@ -6,6 +6,9 @@ public class FPSController : MonoBehaviour
 {
     public Transform m_PitchController;
 
+    public float m_MinPortalScale = 0.5f;
+    public float m_MaxPortalScale = 2f;
+
     float m_Yaw;
     float m_Pitch;
     public float m_YawSpeed;
