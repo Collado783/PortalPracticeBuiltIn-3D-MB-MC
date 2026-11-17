@@ -100,6 +100,7 @@ public class FPSController : MonoBehaviour
 
     private void Start()
     {
+        GameController.GetGameController().SetPlayer(this);
         m_Yaw = transform.rotation.eulerAngles.y;
         m_Pitch = m_PitchController.eulerAngles.x;
         m_StartPosition = transform.position;
@@ -400,8 +401,14 @@ public class FPSController : MonoBehaviour
     public void Restart()
     {
         m_CharacterController.enabled = false;
+
         transform.position = m_StartPosition;
         transform.rotation = m_StartRotation;
+
+        m_VerticalSpeed = 0;
+        m_Direction = Vector3.zero;
+        m_Yaw = m_StartRotation.eulerAngles.y;
+
         m_CharacterController.enabled = true;
 
         m_IsDead = false;
