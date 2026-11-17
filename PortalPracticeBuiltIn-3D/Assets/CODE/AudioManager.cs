@@ -16,6 +16,13 @@ public class AudioManager : MonoBehaviour
     public AudioClip ButtonActivationClip;
     public AudioClip WalkingClip;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            PlaySounds(TeleportClip);
+        }
+    }
 
     public void PlaySounds(AudioClip clip, float volume = 1f)
     {
