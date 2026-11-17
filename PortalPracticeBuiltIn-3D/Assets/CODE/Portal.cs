@@ -7,7 +7,7 @@ public class Portal : MonoBehaviour
 
     public Transform[] m_PortalCorners;
 
-    public bool IsValidPosition(Vector3 position, Vector3 normal, LayerMask mask)
+    public bool IsValidPosition(Vector3 position, Vector3 normal, LayerMask mask, Vector3 scale)
     {
         if (normal == Vector3.zero)
             return false;
@@ -16,9 +16,12 @@ public class Portal : MonoBehaviour
 
         Vector3 originalPosition = transform.position;
         Quaternion originalRotation = transform.rotation;
+            Vector3 originalScale = transform.localScale;
 
         transform.position = position;
         transform.rotation = Quaternion.LookRotation(normal);
+        transform.localScale = scale;
+
         Physics.SyncTransforms(); //Update de fisicas para el raycast, que sino no lo hace bien idk why
 
         bool allPointsValid = m_PortalCorners != null && m_PortalCorners.Length > 0;
@@ -48,8 +51,10 @@ public class Portal : MonoBehaviour
 
         transform.position = originalPosition;
         transform.rotation = originalRotation;
+        transform.localScale = originalScale;
         Physics.SyncTransforms();
 
         return allPointsValid;
     }
 }
+

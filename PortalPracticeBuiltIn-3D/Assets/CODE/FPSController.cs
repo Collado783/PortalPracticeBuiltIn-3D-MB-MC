@@ -8,6 +8,10 @@ public class FPSController : MonoBehaviour
 
     public float m_MinPortalScale = 0.5f;
     public float m_MaxPortalScale = 2f;
+    Vector3 m_BlueBaseScale;
+    Vector3 m_OrangeBaseScale;
+    public float m_ScaleScrollSpeed = 2f; 
+    float m_PortalScale = 1f;
 
     float m_Yaw;
     float m_Pitch;
@@ -102,6 +106,8 @@ public class FPSController : MonoBehaviour
         m_StartRotation = transform.rotation;
         m_CurrentBullets = m_MaxBullets;
         m_IsDead = false;
+        m_BlueBaseScale = PortalBlue.transform.localScale;
+        m_OrangeBaseScale = PortalOrange.transform.localScale;
     }
 
     private void Update()
@@ -270,6 +276,7 @@ public class FPSController : MonoBehaviour
 
         if (Input.GetMouseButton(Button))
         {
+            UpdatePortalScale();
             UpdatePreview();
         }
 
@@ -288,8 +295,7 @@ public class FPSController : MonoBehaviour
             m_PreviewPosition = l_HitInfo.point;
             m_PreviewNormal = l_HitInfo.normal;
 
-            m_IsValidPosition = m_CurrentPortal.IsValidPosition(m_PreviewPosition, m_PreviewNormal, m_ShootLayerMask);
-
+            m_IsValidPosition = m_CurrentPortal.IsValidPosition(m_PreviewPosition, m_PreviewNormal, m_ShootLayerMask, GetPortalScale(m_CurrentPortal));
             GameObject prefabToUse;
 
             if (!m_IsValidPosition)
@@ -312,6 +318,7 @@ public class FPSController : MonoBehaviour
 
                 m_CurrentPreview.transform.position = m_PreviewPosition + (m_PreviewNormal * 0.01f);
                 m_CurrentPreview.transform.rotation = Quaternion.LookRotation(m_PreviewNormal);
+                m_CurrentPreview.transform.localScale = prefabToUse.transform.localScale * m_PortalScale; 
             }
         }
         else
@@ -338,6 +345,7 @@ public class FPSController : MonoBehaviour
             m_CurrentPortal.gameObject.SetActive(true);
             m_CurrentPortal.transform.position = m_PreviewPosition;
             m_CurrentPortal.transform.rotation = Quaternion.LookRotation(m_PreviewNormal);
+            m_CurrentPortal.transform.localScale = GetPortalScale(m_CurrentPortal);
         }
         else
         {
@@ -413,6 +421,19 @@ public class FPSController : MonoBehaviour
         float l_DotAngle = Vector3.Dot(l_Direction, -_Portal.transform.forward);
 
         return l_DotAngle >= l_MaxDotAngle;
+    }
+
+    void UpdatePortalScale()
+    {
+        float l_Scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (l_Scroll != 0f)
+            m_PortalScale = Mathf.Clamp(m_PortalScale + l_Scroll * m_ScaleScrollSpeed, m_MinPortalScale, m_MaxPortalScale);
+    }
+
+    Vector3 GetPortalScale(Portal _Portal)
+    {
+        Vector3 l_BaseScale = _Portal == PortalBlue ? m_BlueBaseScale : m_OrangeBaseScale;
+        return l_BaseScale * m_PortalScale;
     }
 
     void Teleport(Portal _portal)
