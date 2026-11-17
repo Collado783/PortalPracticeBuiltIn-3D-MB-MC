@@ -192,7 +192,7 @@ public class FPSController : MonoBehaviour
 
         if (Physics.Raycast(l_Ray, out RaycastHit l_RaycastHit, m_MaxShootDistance))
         {
-            if (l_RaycastHit.collider.CompareTag("Cube"))
+            if (l_RaycastHit.collider.CompareTag("Cube")|| l_RaycastHit.collider.CompareTag("RefractionCube")|| l_RaycastHit.collider.CompareTag("Turret"))
             {
                 GrabObjectt(l_RaycastHit.collider);
             }

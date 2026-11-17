@@ -154,6 +154,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Turret
       objectReference: {fileID: 0}
+    - target: {fileID: 100008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
+      propertyPath: m_TagString
+      value: Turret
+      objectReference: {fileID: 0}
     - target: {fileID: 400008, guid: e974cdd27b308e14fadbc5fef531fbbc, type: 3}
       propertyPath: m_LocalPosition.x
       value: 31.95
@@ -240,3 +244,4 @@ MonoBehaviour:
   m_LayerMask:
     serializedVersion: 2
     m_Bits: 0
+  m_AngleToFall: 30

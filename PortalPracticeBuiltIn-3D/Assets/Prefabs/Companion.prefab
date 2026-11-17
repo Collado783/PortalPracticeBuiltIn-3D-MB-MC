@@ -831,6 +831,7 @@ GameObject:
   - component: {fileID: 334405028679832682}
   - component: {fileID: 8934214926637980333}
   - component: {fileID: 5576552327814797961}
+  - component: {fileID: -7819797155307839297}
   m_Layer: 0
   m_Name: Companion
   m_TagString: Cube
@@ -968,6 +969,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Companioncube
   m_MaxValidAngle: 90
+  m_ExitOffset: 0.05
+  m_TeleportCooldown: 0.2
+--- !u!114 &-7819797155307839297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3725231069815497512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1598cb32d0cc3844b8f99f3e6dfd4a53, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BouncingPhysics
+  bounceMaterial: {fileID: 13400000, guid: cfa033fddff67f140afabe26004c9261, type: 2}
+  originalMaterial: {fileID: 13400000, guid: b419e3267211b5f41945e0467271251d, type: 2}
+  iceMaterial: {fileID: 13400000, guid: e71396ad4a1620d4f9abdd4738f81f32, type: 2}
 --- !u!1 &3798755064068435407
 GameObject:
   m_ObjectHideFlags: 0

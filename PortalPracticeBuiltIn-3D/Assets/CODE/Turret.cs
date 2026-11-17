@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Turret : MonoBehaviour
@@ -34,6 +35,12 @@ public class Turret : MonoBehaviour
                     m_gameController.GameOverUI();
 
                 }
+                if (l_RaycastHit.collider.CompareTag("Turret"))
+                {
+                    l_RaycastHit.collider.gameObject.SetActive(false);
+                     
+                }
+
             }
 
             m_Laser.SetPosition(1, l_Postion);
