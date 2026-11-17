@@ -414,12 +414,31 @@ public class FPSController : MonoBehaviour
 
     void Teleport(Portal _portal)
     {
-        Vector3 l_LocalPosition = _portal.transform.InverseTransformPoint(transform.position);
+        Transform l_In = _portal.transform;
+        Transform l_Out = _portal.m_OtherPortalTransform;
+
+        Vector3 l_LocalPosition = l_In.InverseTransformPoint(transform.position);
+        Vector3 l_LocalForward = l_In.InverseTransformDirection(m_Camera.transform.forward);
 
         m_CharacterController.enabled = false;
-        transform.position = _portal.m_OtherPortalTransform.TransformPoint(new Vector3(-l_LocalPosition.x, l_LocalPosition.y, -l_LocalPosition.z));
-        transform.forward = -_portal.m_OtherPortalTransform.forward;
-        m_Yaw = transform.rotation.eulerAngles.y;
+        transform.position = l_Out.TransformPoint(new Vector3(-l_LocalPosition.x, l_LocalPosition.y, -l_LocalPosition.z));
+
+        Vector3 l_NewForward = l_Out.TransformDirection(l_LocalForward);
+        Vector3 l_Flat = new Vector3(l_NewForward.x, 0.0f, l_NewForward.z);
+        if (l_Flat.sqrMagnitude > 0.0001f)
+        {
+            m_Yaw = Quaternion.LookRotation(l_Flat.normalized).eulerAngles.y;
+            transform.rotation = Quaternion.Euler(0.0f, m_Yaw, 0.0f);
+        }
+
+        m_Pitch = -Mathf.Asin(Mathf.Clamp(l_NewForward.normalized.y, -1f, 1f)) * Mathf.Rad2Deg;
+        m_Pitch = Mathf.Clamp(m_Pitch, m_MinPitch, m_MaxPitch);
+        m_PitchController.localRotation = Quaternion.Euler(m_Pitch, 0.0f, 0.0f);
+
+        Vector3 l_LocalMove = l_In.InverseTransformDirection(m_Direction);
+        m_Direction = l_Out.TransformDirection(l_LocalMove);
+        m_Direction.y = 0.0f;
+
         m_CharacterController.enabled = true;
     }
 }
